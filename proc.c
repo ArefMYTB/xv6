@@ -532,3 +532,24 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+int
+getProcCount(void)
+{
+  struct proc *p;
+  int num = 0;
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    if(p->state != UNUSED)
+      num++;
+    cprintf("%d %s\n", p->pid, p->name);
+  }
+  cprintf("%d",num);
+  return 0;
+}
+
+int
+getReadCount(void)
+{
+  cprintf("Hi");
+  return 0;
+}
