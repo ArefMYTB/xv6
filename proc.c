@@ -88,6 +88,7 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+  p->read_count = 0; // To count read syscall
 
   release(&ptable.lock);
 
@@ -539,17 +540,19 @@ getProcCount(void)
   struct proc *p;
   int num = 0;
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-    if(p->state != UNUSED)
+    if(p->state != UNUSED){
+      cprintf(p->name);
+      cprintf("\n");
       num++;
-    cprintf("%d %s\n", p->pid, p->name);
+    }
   }
-  cprintf("%d",num);
+  cprintf("number of process is: %d",num);
   return 0;
 }
 
 int
 getReadCount(void)
 {
-  cprintf("Hi");
+  cprintf("number of read syscall is: %d",myproc()->read_count); // To count read syscall
   return 0;
 }

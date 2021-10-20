@@ -3,6 +3,6 @@
 #include "user.h"
 
 int main(void){
-    getProcCount();
+    getReadCount();
     exit();
 }
