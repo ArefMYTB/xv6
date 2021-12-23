@@ -97,7 +97,24 @@ sys_getProcCount(void)
 }
 
 int
-sys_getReadCount(void)
+sys_getReadCount()
 {
   return getReadCount();
+}
+
+int 
+sys_clone(void)
+{ 
+  //there can be no input fix that.
+  int stack;
+  if(argint(0,&stack) < 0){
+    return -1;
+  }
+  return clone((void *) stack);
+}
+
+int
+sys_join(void)
+{
+  return join();
 }

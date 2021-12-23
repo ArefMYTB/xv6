@@ -1,3 +1,5 @@
+#define MAX_TASK_UNITS 10
+
 // Per-CPU state
 struct cpu {
   uchar apicid;                // Local APIC ID
@@ -49,7 +51,14 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
-  int read_count;              // To count read syscall
+  int readcount;               // How many times `read` syscall has been called
+  int stackTop;                // Memory Address of user stack
+  int threads;                 // This flag shows the proc instance is a independent process(0) or a dependent thread(1)
+  int status;                  // This flag shows the proc instance type(0: Unit, 1: Task, others: Neither)
+  int unit_num;                // If the process is a Unit, then this value shows the index of the Unit
+  int unit_count;              // If the process is a Task, then this value shows the number of Units have been processed so far.
+  int unit_list[MAX_TASK_UNITS]; // List of Units in the Task
+  int Value;                   // The value stored in the Task
 };
 
 // Process memory is laid out contiguously, low addresses first:
